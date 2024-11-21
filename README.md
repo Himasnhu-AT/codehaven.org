@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CodeHaven IDE
 
-## Getting Started
+## 🚀 Supercharge Your Coding Journey with AI-Powered Development
 
-First, run the development server:
+CodeHaven is an open-source, cross-platform Integrated Development Environment (IDE) that leverages cutting-edge AI to revolutionize your coding experience.
+
+## 🌟 About CodeHaven
+
+CodeHaven is an innovative, AI-enhanced IDE that transforms your development workflow through intelligent code assistance and multi-model support.
+
+### 📦 Releases
+
+#### Download Links
+
+- 🍎 macOS (v1.0.0): [Download]()
+  - **Release Date**: TBD
+- 💻 Windows (v1.0.0): [Download]()
+  - **Release Date**: TBD
+- 🐧 Linux (v1.0.0): [Download]()
+  - **Release Date**: TBD
+
+### 🛠 Tech Stack
+
+- Next.js
+- Tauri
+- Rust
+- Monaco Editor
+- TypeScript
+- AI Integration
+
+### 🌟 Key Features
+
+##### Abilities
+
+- 🤖 AI-Powered Code Generation
+- 🌈 Multi-Language Support
+- 🔧 Advanced Monaco Editor
+- 💻 Cross-Platform Compatibility
+- 🔒 Local AI Processing
+
+##### AI Capabilities
+
+- **AI-Powered Coding Assistant**
+
+  - Intelligent code completion
+  - Real-time error detection
+  - Automated code suggestions
+  - Multi-language support
+
+##### Additional
+
+- **Advanced Monaco Editor Integration**
+
+  - Syntax highlighting
+  - Minimap navigation
+  - Multi-language support
+  - Customizable themes
+
+- **Cross-Platform Compatibility**
+  - macOS
+  - Windows
+  - Linux
+
+### 🤖 AI Capabilities
+
+- Multiple AI model integrations
+- Context-aware code generation
+- Intelligent refactoring suggestions
+- Learning-based auto-completion
+
+### 💻 Installation
+
+#### Download Links
+
+Visit the [Releases](#releases) section to download the latest version of CodeHaven for your operating system.
+
+### 🔧 Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/Himasnhu-at/CodeHaven.git
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🤝 Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📄 License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
