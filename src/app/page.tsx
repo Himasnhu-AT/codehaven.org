@@ -8,7 +8,7 @@ const EditorLayout = dynamic(() => import("@/components/EditorLayout"), {
 
 export default function Home() {
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-[#1E1E1E]">
       <EditorLayout />
     </div>
   );

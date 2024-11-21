@@ -20,7 +20,7 @@ import Image from "next/image";
 import { useRef } from "react";
 
 // Logo Component
-export function Logo() {
+function Logo() {
   const ref = useRef(null);
 
   return (

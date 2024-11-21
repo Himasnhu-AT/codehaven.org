@@ -17,12 +17,12 @@ const nextConfig: NextConfig = {
             "python",
           ],
           features: [
-            "coreCommands",
+            // "coreCommands",
             "find",
             "contextmenu",
             "snippet",
-            "formatters",
-            "livePreview",
+            // "formatters",
+            // "livePreview",
           ],
         }),
       );

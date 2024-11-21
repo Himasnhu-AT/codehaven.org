@@ -16,7 +16,7 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
 }) => {
   useEffect(() => {
     (window as any).MonacoEnvironment = {
-      getWorkerUrl: function (_, label) {
+      getWorkerUrl: function (_: unknown, label: unknown) {
         console.log(`Loading worker for: ${label}`);
         if (label === "typescript" || label === "javascript") {
           return "_next/static/ts.worker.js";
@@ -51,6 +51,18 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
       value={value}
       onChange={onChange}
       theme="vs-dark"
+      options={{
+        minimap: { enabled: false },
+        scrollbar: {
+          vertical: "visible",
+          horizontal: "visible",
+        },
+        lineNumbers: "on",
+        glyphMargin: true,
+        folding: true,
+        lineDecorationsWidth: 10,
+        lineNumbersMinChars: 3,
+      }}
     />
   );
 };

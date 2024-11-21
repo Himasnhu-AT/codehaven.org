@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import FileExplorer from "./FileExplorer";
 import { FileTreeNode } from "@/types/FileTree";
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/tauri";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const MonacoEditor = dynamic(() => import("./MonacoEditor"), { ssr: false });
 
@@ -61,6 +64,13 @@ const EditorLayout: React.FC = () => {
     }
   };
 
+  const handleCloseFile = (path: string) => {
+    setOpenFiles(openFiles.filter((file) => file.path !== path));
+    if (activeFile === path) {
+      setActiveFile(openFiles[0]?.path || null);
+    }
+  };
+
   const getLanguageFromPath = (path: string): string => {
     const extension = path.split(".").pop()?.toLowerCase();
     switch (extension) {
@@ -82,22 +92,33 @@ const EditorLayout: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/4 bg-gray-900">
+    <div className="flex h-screen bg-[#1E1E1E] text-[#CCCCCC]">
+      <div className="w-64 bg-[#252526] border-r border-[#3C3C3C]">
         {fileTree && (
           <FileExplorer fileTree={fileTree} onFileSelect={handleFileSelect} />
         )}
       </div>
-      <div className="w-3/4 flex flex-col">
-        <div className="flex bg-gray-800 text-white">
+      <Separator orientation="vertical" className="h-full" />
+      <div className="flex-1 flex flex-col">
+        <div className="flex bg-[#252526] text-[#CCCCCC] border-b border-[#3C3C3C]">
           {openFiles.map((file) => (
-            <div
+            <Button
               key={file.path}
-              className={`px-4 py-2 cursor-pointer ${activeFile === file.path ? "bg-gray-700" : "bg-gray-800"}`}
+              variant={activeFile === file.path ? "secondary" : "ghost"}
+              className="px-3 py-1 text-sm flex items-center justify-between"
               onClick={() => setActiveFile(file.path)}
             >
-              {file.path.split("/").pop()}
-            </div>
+              <span className="truncate max-w-[100px]">
+                {file.path.split("/").pop()}
+              </span>
+              <X
+                className="ml-2 h-4 w-4 opacity-0 group-hover:opacity-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCloseFile(file.path);
+                }}
+              />
+            </Button>
           ))}
         </div>
         <div className="flex-grow">

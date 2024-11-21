@@ -1,5 +1,13 @@
 import React from "react";
 import { FileTreeNode } from "@/types/FileTree";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { File, Folder } from "lucide-react";
 
 interface FileExplorerProps {
   fileTree: FileTreeNode;
@@ -11,29 +19,38 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
   onFileSelect,
 }) => {
   const renderTree = (node: FileTreeNode) => (
-    <ul className="pl-4">
-      {node.type === "directory" && (
-        <li key={node.path} className="text-gray-300">
-          <span className="font-bold">{node.name}</span>
-          {node.children && node.children.map((child) => renderTree(child))}
-        </li>
-      )}
-      {node.type === "file" && (
-        <li
-          key={node.path}
-          className="text-blue-300 cursor-pointer hover:text-blue-100"
+    <AccordionItem value={node.path} key={node.path}>
+      {node.type === "directory" ? (
+        <>
+          <AccordionTrigger className="py-1 hover:no-underline">
+            <div className="flex items-center text-sm">
+              <Folder className="mr-2 h-4 w-4" />
+              <span>{node.name}</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            {node.children && node.children.map((child) => renderTree(child))}
+          </AccordionContent>
+        </>
+      ) : (
+        <Button
+          variant="ghost"
+          className="w-full justify-start py-1 px-4 text-sm"
           onClick={() => onFileSelect(node.path)}
         >
-          {node.name}
-        </li>
+          <File className="mr-2 h-4 w-4" />
+          <span>{node.name}</span>
+        </Button>
       )}
-    </ul>
+    </AccordionItem>
   );
 
   return (
-    <div className="bg-gray-800 text-white p-4 h-full overflow-auto">
-      <h2 className="text-xl font-bold mb-4">CodeHaven</h2>
-      {renderTree(fileTree)}
+    <div className="bg-[#252526] text-[#CCCCCC] p-2 h-full overflow-auto">
+      <h2 className="text-sm font-semibold mb-2 px-2">CodeHaven</h2>
+      <Accordion type="multiple" className="w-full">
+        {renderTree(fileTree)}
+      </Accordion>
     </div>
   );
 };
