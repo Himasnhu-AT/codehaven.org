@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
 import { Input } from "./ui/input";
 
 const Header: React.FC = () => {

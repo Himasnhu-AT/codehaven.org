@@ -27,7 +27,15 @@ interface OpenFile {
   language: string;
 }
 
-const EditorLayout: React.FC = () => {
+interface EditorLayoutProps {
+  initialPath: string;
+  onLoadComplete: () => void;
+}
+
+const EditorLayout: React.FC<EditorLayoutProps> = ({
+  initialPath,
+  onLoadComplete,
+}) => {
   const [fileTree, setFileTree] = useState<FileTreeNode | null>(null);
   const [openFiles, setOpenFiles] = useState<OpenFile[]>([]);
   const [activeFile, setActiveFile] = useState<string | null>(null);
@@ -36,14 +44,18 @@ const EditorLayout: React.FC = () => {
 
   useEffect(() => {
     fetchFileTree();
-  }, []);
+  });
 
   const fetchFileTree = async () => {
     try {
-      const tree = await invoke<FileTreeNode>("get_file_tree");
+      const tree = await invoke<FileTreeNode>("get_file_tree", {
+        path: initialPath,
+      });
       setFileTree(tree);
+      onLoadComplete();
     } catch (error) {
       console.error("Error fetching file tree:", error);
+      onLoadComplete();
     }
   };
 

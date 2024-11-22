@@ -12,12 +12,20 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": false,
+      "dialog": {
+        "open": true,
+        "save": true,
+        "message": true
+      },
+      "fs": {
+        "writeFile": true
+      }
     },
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
-      "copyright": "",
+      "copyright": "Himanshu",
       "deb": {
         "depends": []
       },
