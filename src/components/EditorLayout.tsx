@@ -19,7 +19,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
-const MonacoEditor = dynamic(() => import("./MonacoEditor"), { ssr: false });
+const CustomEditor = dynamic(() => import("../editor/Editor"), { ssr: false });
 
 interface OpenFile {
   path: string;
@@ -250,12 +250,8 @@ const EditorLayout: React.FC<EditorLayoutProps> = ({
             </div>
             <div className="flex-grow">
               {activeFile && (
-                <MonacoEditor
-                  language={
-                    openFiles.find((file) => file.path === activeFile)
-                      ?.language || "plaintext"
-                  }
-                  value={
+                <CustomEditor
+                  initialText={
                     openFiles.find((file) => file.path === activeFile)
                       ?.content || ""
                   }
