@@ -60,6 +60,34 @@ We're thrilled that you're interested in contributing to CodeHaven. This documen
 
 We appreciate and recognize all contributors!
 
-## Questions?
+### 📄 License
+
+This project is licensed under the NonCommercial Updated Mozilla Public License Version 2.0 - see the [LICENSE.md](../LICENSE.md) file for details.
+
+### 💬 Questions?
 
 Join our [Discord Community]() for support and discussions.
+
+### 🆕 Changelog
+
+Please refer to the [CHANGELOG.md](../CHANGELOG.md) file for a detailed list of changes and updates.
+
+---
+
+## Additional Guidelines
+
+### Commercial Use
+
+If you wish to use the Covered Software for commercial purposes, you must contact the author for a commercial license. The author has the right to charge for the commercial license.
+
+### Use of Commercial License Fees
+
+The money collected from the commercial license will be used to maintain the software and add new features. A portion of the money can also be utilized for providing contributors a reward for their contributions.
+
+### License Changes
+
+The author has the right to change the license in the future, and you must comply with the new license. You will be notified about the change in the license.
+
+### Donations
+
+Any money donated to the project or the author will be used as specified by the donor. If the donor does not specify, the money will be used for maintaining the software and adding new features. A portion of the money can also be utilized for providing contributors a reward for their contributions. The percentage can be decided by the donor if they wish to.

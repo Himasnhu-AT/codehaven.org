@@ -1,19 +1,18 @@
 {
   "name": "codehaven",
-  "version": "0.1.0",
+  "version": "0.1.0-beta0.1",
   "private": true,
   "scripts": {
     "dev": "pnpm tauri dev",
-    "build": "pnpm build:frontend && pnpm build:rs && pnpm build:www",
-    "package": "pnpm build:macos",
-    "build:macos": "pnpm tauri build",
-    "build:windows": "echo \"Not configured yet\" && exit 1",
-    "build:linux": "echo \"Not configured yet\" && exit 1",
     "dev:frontend": "next dev --turbopack",
+    "build": "pnpm build:frontend && pnpm build:rs && pnpm build:www",
     "build:frontend": "next build",
     "build:rs": "cd src-tauri && cargo build",
     "build:www": "cd www && pnpm build",
-    "start": "next start",
+    "package": "pnpm build:macos",
+    "package:macos": "pnpm tauri build",
+    "package:windows": "echo \"Not configured yet\" && exit 1",
+    "package:linux": "echo \"Not configured yet\" && exit 1",
     "lint": "next lint"
   },
   "dependencies": {
