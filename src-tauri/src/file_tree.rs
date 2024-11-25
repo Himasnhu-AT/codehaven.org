@@ -16,9 +16,29 @@ pub struct FileTreeNode {
     pub modified: Option<String>,
 }
 
-const MAX_PARALLEL_DIRS: usize = 50; // Maximum number of directories to process in parallel
+const MAX_PARALLEL_DIRS: usize = 50;
 
-// Changed to sync function for use with rayon
+pub fn sort_tree(node: &mut FileTreeNode) {
+    if let Some(children) = &mut node.children {
+        // Sort children
+        children.sort_by(|a, b| {
+            // First compare by type (files before directories)
+            let type_order = a.node_type.cmp(&b.node_type);
+            // If types are the same, compare by name (case-insensitive)
+            if type_order == std::cmp::Ordering::Equal {
+                a.name.to_lowercase().cmp(&b.name.to_lowercase())
+            } else {
+                type_order
+            }
+        });
+
+        // Recursively sort children's children
+        for child in children.iter_mut() {
+            sort_tree(child);
+        }
+    }
+}
+
 pub fn read_dir_recursive_inner<P: AsRef<Path>>(
     path: P,
     depth: usize,
@@ -26,13 +46,11 @@ pub fn read_dir_recursive_inner<P: AsRef<Path>>(
 ) -> Result<FileTreeNode, AppError> {
     let path = path.as_ref().to_path_buf();
     let metadata = fs::metadata(&path)?;
-
     let name = path
         .file_name()
         .ok_or_else(|| AppError::from("Invalid path".to_string()))?
         .to_string_lossy()
         .into_owned();
-
     let node_type = if metadata.is_dir() {
         "directory"
     } else {
@@ -49,12 +67,10 @@ pub fn read_dir_recursive_inner<P: AsRef<Path>>(
             .as_secs()
             .to_string()
     });
-
     let children = if metadata.is_dir() && depth < max_depth {
         let entries: Vec<_> = fs::read_dir(&path)?
             .filter_map(|entry| entry.ok())
             .collect();
-
         if entries.len() > 10 && entries.len() < MAX_PARALLEL_DIRS {
             // Process larger directories in parallel using rayon
             Some(
@@ -75,7 +91,6 @@ pub fn read_dir_recursive_inner<P: AsRef<Path>>(
     } else {
         None
     };
-
     Ok(FileTreeNode {
         name,
         path: path.to_string_lossy().to_string(),

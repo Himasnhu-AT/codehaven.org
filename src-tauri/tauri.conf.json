@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "codehaven",
-    "version": "v0.1.0-beta0.1"
+    "version": "0.1.0-beta0.1"
   },
   "tauri": {
     "allowlist": {

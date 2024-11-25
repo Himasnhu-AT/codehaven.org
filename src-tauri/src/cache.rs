@@ -31,3 +31,37 @@ impl FileCache {
         self.contents.insert(path, (content, SystemTime::now()));
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::thread::sleep;
+    use std::time::Duration;
+
+    #[test]
+    fn test_file_cache_set_and_get() {
+        let mut cache = FileCache::new();
+        let path = "test_path".to_string();
+        let content = "test_content".to_string();
+
+        cache.set(path.clone(), content.clone());
+        assert_eq!(cache.get(&path), Some(&content));
+    }
+
+    #[test]
+    fn test_file_cache_expiration() {
+        let mut cache = FileCache::new();
+        let path = "test_path".to_string();
+        let content = "test_content".to_string();
+
+        cache.set(path.clone(), content.clone());
+        sleep(Duration::from_secs(6)); // Wait for cache to expire
+        assert_eq!(cache.get(&path), None);
+    }
+
+    #[test]
+    fn test_file_cache_nonexistent_path() {
+        let cache = FileCache::new();
+        assert_eq!(cache.get("nonexistent_path"), None);
+    }
+}

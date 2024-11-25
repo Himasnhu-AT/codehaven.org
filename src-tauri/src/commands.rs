@@ -1,6 +1,6 @@
 use crate::cache::FileCache;
 use crate::error::AppError;
-use crate::file_tree::{read_dir_recursive_inner, FileTreeNode};
+use crate::file_tree::{read_dir_recursive_inner, sort_tree, FileTreeNode};
 use std::sync::Arc;
 use std::{fs, io::Read, io::Write, path::Path};
 use tauri::command;
@@ -14,9 +14,10 @@ pub async fn get_file_tree(
     path: String,
     max_depth: Option<usize>,
 ) -> Result<FileTreeNode, AppError> {
-    // Spawn blocking operation to handle file system operations
     tokio::task::spawn_blocking(move || {
-        read_dir_recursive_inner(path, 0, max_depth.unwrap_or(std::usize::MAX))
+        let mut tree = read_dir_recursive_inner(path, 0, max_depth.unwrap_or(std::usize::MAX))?;
+        sort_tree(&mut tree);
+        Ok(tree)
     })
     .await
     .map_err(|e| AppError::from(e.to_string()))?
@@ -87,4 +88,50 @@ pub async fn save_file_content(path: String, content: String) -> Result<(), AppE
     })
     .await
     .map_err(|e| AppError::from(e.to_string()))?
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+
+    #[tokio::test]
+    async fn test_get_file_tree_invalid_path() {
+        let result = get_file_tree("invalid_path".to_string(), Some(2)).await;
+        assert!(result.is_err());
+    }
+
+    #[tokio::test]
+    async fn test_save_file_content() {
+        let test_file = "test_save_file.txt";
+        let content = "Hello, world!";
+
+        let result = save_file_content(test_file.to_string(), content.to_string()).await;
+        assert!(result.is_ok());
+
+        let saved_content = fs::read_to_string(test_file).unwrap();
+        assert_eq!(saved_content, content);
+
+        fs::remove_file(test_file).unwrap();
+    }
+
+    #[tokio::test]
+    async fn test_save_file_content_create_directories() {
+        let test_file = "test_dir/test_save_file.txt";
+        let content = "Hello, world!";
+
+        let result = save_file_content(test_file.to_string(), content.to_string()).await;
+        assert!(result.is_ok());
+
+        let saved_content = fs::read_to_string(test_file).unwrap();
+        assert_eq!(saved_content, content);
+
+        fs::remove_dir_all("test_dir").unwrap();
+    }
+
+    #[tokio::test]
+    async fn test_save_file_content_invalid_path() {
+        let result = save_file_content("".to_string(), "content".to_string()).await;
+        assert!(result.is_err());
+    }
 }
