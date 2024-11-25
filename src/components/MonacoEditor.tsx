@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import Editor, { loader } from "@monaco-editor/react";
+import { useEffect, useRef } from "react";
+import Editor, { loader, Monaco } from "@monaco-editor/react";
 
 loader.config({ paths: { vs: "/monaco-editor/min/vs" } });
 
@@ -14,10 +14,11 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
   value,
   onChange,
 }) => {
+  const editorRef = useRef<Monaco | null>(null);
+
   useEffect(() => {
     (window as any).MonacoEnvironment = {
       getWorkerUrl: function (_: unknown, label: unknown) {
-        console.log(`Loading worker for: ${label}`);
         if (label === "typescript" || label === "javascript") {
           return "_next/static/ts.worker.js";
         }
@@ -35,7 +36,8 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
     };
 
     loader.init().then(
-      () => {
+      (monaco) => {
+        editorRef.current = monaco;
         console.log("Monaco Editor initialized successfully");
       },
       (error) => {
@@ -44,12 +46,18 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
     );
   }, []);
 
+  const handleEditorChange = (value: string | undefined) => {
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
   return (
     <Editor
       height="100%"
       language={language}
       value={value}
-      onChange={onChange}
+      onChange={handleEditorChange}
       theme="vs-dark"
       options={{
         minimap: { enabled: false },
@@ -62,6 +70,11 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
         folding: true,
         lineDecorationsWidth: 10,
         lineNumbersMinChars: 3,
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        smoothScrolling: true,
+        wordWrap: "on",
+        tabSize: 2,
       }}
     />
   );

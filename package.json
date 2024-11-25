@@ -9,7 +9,7 @@
     "build:frontend": "next build",
     "build:rs": "cd src-tauri && cargo build",
     "build:www": "cd www && pnpm build",
-    "package": "pnpm build:macos",
+    "package": "pnpm package:macos",
     "package:macos": "pnpm tauri build",
     "package:windows": "echo \"Not configured yet\" && exit 1",
     "package:linux": "echo \"Not configured yet\" && exit 1",
